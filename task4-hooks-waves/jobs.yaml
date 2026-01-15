@@ -7,13 +7,15 @@ metadata:
     argocd.argoproj.io/sync-wave: "-2"
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
+  backoffLimit: 1
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
-          image: busybox:1.36
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "echo JOB one (PreSync wave -2); sleep 3; echo DONE one"]
 
 ---
@@ -26,13 +28,15 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
+  backoffLimit: 1
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
-          image: busybox:1.36
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "echo JOB two (PreSync wave -1); sleep 3; echo DONE two"]
 
 ---
@@ -43,13 +47,15 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
+  backoffLimit: 1
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
-          image: busybox:1.36
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "echo JOB three (Sync wave 0); sleep 3; echo DONE three"]
 
 ---
@@ -60,13 +66,15 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
+  backoffLimit: 1
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
-          image: busybox:1.36
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "echo JOB four (Sync wave 1); sleep 3; echo DONE four"]
 
 ---
@@ -77,13 +85,15 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
+  backoffLimit: 1
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
-          image: busybox:1.36
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "echo JOB five (Sync wave 2); sleep 3; echo DONE five"]
 
 ---
@@ -96,12 +106,14 @@ metadata:
     argocd.argoproj.io/sync-wave: "3"
     argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
+  backoffLimit: 1
   ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
-          image: busybox:1.36
+          image: alpine:3.20
+          imagePullPolicy: IfNotPresent
           command: ["sh", "-c", "echo JOB six (PostSync wave 3); sleep 3; echo DONE six"]
 

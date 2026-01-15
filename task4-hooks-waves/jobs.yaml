@@ -5,18 +5,16 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/sync-wave: "-2"
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
-  backoffLimit: 1
-  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
           image: alpine:3.20
-          imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "echo JOB one (PreSync wave -2); sleep 3; echo DONE one"]
+          command: ["sh","-c","set -eux; echo ONE; sleep 2; echo DONE ONE"]
 
 ---
 apiVersion: batch/v1
@@ -26,18 +24,16 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PreSync
     argocd.argoproj.io/sync-wave: "-1"
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
-  backoffLimit: 1
-  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
           image: alpine:3.20
-          imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "echo JOB two (PreSync wave -1); sleep 3; echo DONE two"]
+          command: ["sh","-c","set -eux; echo TWO; sleep 2; echo DONE TWO"]
 
 ---
 apiVersion: batch/v1
@@ -47,16 +43,14 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
-  backoffLimit: 1
-  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
           image: alpine:3.20
-          imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "echo JOB three (Sync wave 0); sleep 3; echo DONE three"]
+          command: ["sh","-c","set -eux; echo THREE; sleep 2; echo DONE THREE"]
 
 ---
 apiVersion: batch/v1
@@ -66,16 +60,14 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  backoffLimit: 1
-  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
           image: alpine:3.20
-          imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "echo JOB four (Sync wave 1); sleep 3; echo DONE four"]
+          command: ["sh","-c","set -eux; echo FOUR; sleep 2; echo DONE FOUR"]
 
 ---
 apiVersion: batch/v1
@@ -85,16 +77,14 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
 spec:
-  backoffLimit: 1
-  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
           image: alpine:3.20
-          imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "echo JOB five (Sync wave 2); sleep 3; echo DONE five"]
+          command: ["sh","-c","set -eux; echo FIVE; sleep 2; echo DONE FIVE"]
 
 ---
 apiVersion: batch/v1
@@ -104,16 +94,14 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/sync-wave: "3"
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
 spec:
-  backoffLimit: 1
-  ttlSecondsAfterFinished: 60
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
       containers:
         - name: job
           image: alpine:3.20
-          imagePullPolicy: IfNotPresent
-          command: ["sh", "-c", "echo JOB six (PostSync wave 3); sleep 3; echo DONE six"]
+          command: ["sh","-c","set -eux; echo SIX; sleep 2; echo DONE SIX"]
 

@@ -1,0 +1,98 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: one
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: job
+          image: busybox:1.36
+          command: ["sh", "-c", "echo JOB one (PreSync wave -2); sleep 3; echo DONE one"]
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: two
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: job
+          image: busybox:1.36
+          command: ["sh", "-c", "echo JOB two (PreSync wave -1); sleep 3; echo DONE two"]
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: three
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: job
+          image: busybox:1.36
+          command: ["sh", "-c", "echo JOB three (Sync wave 0); sleep 3; echo DONE three"]
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: four
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: job
+          image: busybox:1.36
+          command: ["sh", "-c", "echo JOB four (Sync wave 1); sleep 3; echo DONE four"]
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: five
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: job
+          image: busybox:1.36
+          command: ["sh", "-c", "echo JOB five (Sync wave 2); sleep 3; echo DONE five"]
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: six
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: job
+          image: busybox:1.36
+          command: ["sh", "-c", "echo JOB six (PostSync wave 3); sleep 3; echo DONE six"]
+
